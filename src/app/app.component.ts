@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from './models/product';
 import { products as data } from './data/products';
 import { ProductsService } from './services/product.service';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +15,26 @@ export class AppComponent implements OnInit {
 
   loading = false;
   title = 'angular app';
-  products: IProduct[] = [];
+  products$: Observable<IProduct[]>;
 
   ngOnInit(): void {
     this.loading = true;
-    this.productsService.getAll().subscribe((products) => {
-      this.products = products;
-      this.loading = false;
-    });
+
+    this.products$ = this.productsService.getAll().pipe(
+      tap(() => (this.loading = false)),
+      catchError(this.errorHandler)
+    );
   }
+
+  private errorHandler(error: HttpErrorResponse) {
+    return throwError(() => error.message);
+  }
+
+  // ngOnInit(): void {
+  //   this.loading = true;
+  //   this.productsService.getAll().subscribe((products) => {
+  //     this.products = products;
+  //     this.loading = false;
+  //   });
+  // }
 }
