@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   loading = false;
   title = 'angular app';
   products$: Observable<IProduct[]>;
+  term = '';
 
   ngOnInit(): void {
     this.loading = true;
