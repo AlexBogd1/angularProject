@@ -4,6 +4,7 @@ import { products as data } from './data/products';
 import { ProductsService } from './services/product.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ModalService } from './services/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    public modalService: ModalService
+  ) {}
 
   loading = false;
   title = 'angular app';

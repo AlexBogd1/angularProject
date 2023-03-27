@@ -19,7 +19,10 @@
     ></app-product>
   </div>
 
-  <app-modal title="Create  new product">
+  <app-modal
+    *ngIf="modalService.isVisible$ | async"
+    title="Create  new product"
+  >
     <app-create-product></app-create-product
   ></app-modal>
 </div>
